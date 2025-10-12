@@ -391,7 +391,19 @@ export default function Chat() {
                     {msg.content}
                     {isSentByUser && (
                       <span className="ml-2 text-xs align-bottom">
-                        {!msg.deliveredAt && (
+                        {
+                          !(msg.id || msg._id) && (
+                            <span
+                              className="text-neutral-400"
+                              title="Sending..."
+                            >
+                              🕓
+                              </span>
+                          )
+                        }
+                        {/* Message status indicators */}
+
+                        {!msg.deliveredAt && (msg.id || msg._id) && (
                           <span
                             className="text-neutral-400"
                             title="Not delivered"
