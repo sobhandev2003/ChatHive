@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, href } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Chat from "./pages/Chat";
@@ -20,6 +20,7 @@ export default function App() {
     if (user) {
       setIsLoggedIn(true);
       navigate("/");
+   
     }
 
 

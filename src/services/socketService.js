@@ -38,9 +38,12 @@ export const sendTyping = (to, state) => {
 };
 
 export const markRead = (selectedUserId) => {
+  //  console.log("Try mark read 1", selectedUserId);
   if (!selectedUserId) return;
+  // console.log("Try mark read");
+
   try {
-  socket?.send(JSON.stringify({ type: "read", selectedUserId }));
+    socket?.send(JSON.stringify({ type: "read", selectedUserId }));
   } catch (error) {
     console.error("Mark read error:", error);
     throw error;

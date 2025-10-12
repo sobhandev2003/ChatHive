@@ -17,7 +17,7 @@ export default function Login() {
     setError("");
     try {
       const data = await login(email, password);
-      console.log(data);
+      // console.log(data);
       dispatch(setCredentials(data));
       
       

@@ -1,12 +1,19 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: "http://localhost:3000", // backend server,
-  baseURL: "https://chathive-backend-gqs9.onrender.com", // backend server,
+  baseURL: "https://chathive-backend-gqs9.onrender.com",
   withCredentials: true,
-  headers:{
-    "Authorization": `Bearer ${localStorage.getItem("token")}`
+});
+
+// Update Authorization header before each request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    delete config.headers.Authorization;
   }
+  return config;
 });
 
 // api.interceptors.request.use((config) => {

@@ -136,8 +136,8 @@ export default function Chat() {
             });
             return updatedMessages;
           });
-
-          markRead(selectedUser.id || selectedUser._id);
+          // console.log("selectedUser", selectedUser);
+          // selectedUser && markRead(selectedUser.id || selectedUser._id);
         }
         else if (data.type === "delivered") {
           //message sent confirmation
@@ -151,7 +151,9 @@ export default function Chat() {
             });
             return updatedMessages;
           });
-          markRead(selectedUser.id || selectedUser._id);
+          // console.log("selectedUser", selectedUser);
+
+          // selectedUser && markRead(selectedUser.id || selectedUser._id);
         }
         else if (data.type === "read") {
           //message read confirmation
@@ -218,6 +220,8 @@ export default function Chat() {
     });
     // Sort messages WhatsApp-style
     filtered?.sort((a, b) => {
+      // console.log("selectedUser", selectedUser);
+      selectedUser && markRead(selectedUser.id || selectedUser._id);
       const getMessageTime = (msg) => {
         // If message is from the logged-in user → use createdAt
         if (msg.from === loginUserId) {
@@ -229,12 +233,7 @@ export default function Chat() {
 
       return getMessageTime(a) - getMessageTime(b);
     });
-
-
     setFilteredMessages(filtered);
-
-
-
   }, [allmessages])
 
   useEffect(() => {
