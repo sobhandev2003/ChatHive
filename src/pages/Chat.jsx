@@ -9,7 +9,7 @@ import { fetchMessages, getRecentContacts } from "../services/messageService";
 import { v4 as uuidv4 } from 'uuid'
 
 export default function Chat() {
-    const chatRef = useRef(null);
+  const chatRef = useRef(null);
   const user = useSelector((state) => state.auth.user);
   const [searchQueryMatchUser, setSearchQueryMatchUser] = useState([]);
   const [recentMassgesContacts, setRecentMassgesContacts] = useState([]);
@@ -126,6 +126,7 @@ export default function Chat() {
         else if (data.type === "sent") {
           //message sent confirmation
           // console.log("Massege delivered", data.payload);
+
           setAllMessages((prevMessages) => {
             const updatedMessages = (Array.isArray(prevMessages) ? prevMessages : []).map((msg) => {
               if (msg.msgKey && data.payload.frontendKey && msg.msgKey === data.payload.frontendKey) {
@@ -136,6 +137,7 @@ export default function Chat() {
             return updatedMessages;
           });
 
+          markRead(selectedUser.id || selectedUser._id);
         }
         else if (data.type === "delivered") {
           //message sent confirmation
@@ -149,7 +151,7 @@ export default function Chat() {
             });
             return updatedMessages;
           });
-
+          markRead(selectedUser.id || selectedUser._id);
         }
         else if (data.type === "read") {
           //message read confirmation
@@ -369,17 +371,17 @@ export default function Chat() {
           </div>
 
           {/* Messages */}
-          {fillteredMessages && <div 
-          className="flex-1 p-6 overflow-y-auto flex flex-col space-y-3 no-scrollbar"
-          onScroll={handleScroll}
-          ref={chatRef}
+          {fillteredMessages && <div
+            className="flex-1 p-6 overflow-y-auto flex flex-col space-y-3 no-scrollbar"
+            onScroll={handleScroll}
+            ref={chatRef}
           >
             {fillteredMessages.map((msg, index) => {
               const isSentByUser = msg?.from?.toString() === user?._id?.toString();
               return (
                 <div
                   key={msg.id || msg._id || index}
-                  className={`flex ${isSentByUser ? "justify-end" : "justify-start"}`}
+                  className={`flex ${isSentByUser ? "justify-start" : "justify-end"}`}
                 >
                   <div
                     className={`px-4 py-2 rounded-2xl max-w-xs shadow-md ${isSentByUser
