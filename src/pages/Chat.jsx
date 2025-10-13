@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { connectSocket, markRead, sendMessage } from "../services/socketService";
 import { addMessage } from "../store/chatSlice";
 import { Send, Search, MoreVertical } from "lucide-react";
-import { searchUsers } from "../services/authService";
+import { logout, searchUsers } from "../services/authService";
 import { fetchMessages, getRecentContacts } from "../services/messageService";
 import { v4 as uuidv4 } from 'uuid'
+import { logoutUser } from "../store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Chat() {
   const chatRef = useRef(null);
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const [searchQueryMatchUser, setSearchQueryMatchUser] = useState([]);
   const [recentMassgesContacts, setRecentMassgesContacts] = useState([]);
@@ -21,9 +24,25 @@ export default function Chat() {
   const [fillteredMessages, setFilteredMessages] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState(new Set());
   const [isUserScrolledUp, setIsUserScrolledUp] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   //Fetch messages when selected user changes
 
+  const handelLogout = async () => {
+    await logout();
+    dispatch(logoutUser());
 
+  }
+
+  const handelProfilePhotoChange = async (e) => {
+
+    const file = e.target.files[0];
+    if (!file) return;
+    // Example: upload logic (replace with your API)
+    const formData = new FormData();
+    formData.append("avatar", file);
+    console.log(file);
+
+  }
   // detect when user manually scrolls up
   const handleScroll = () => {
     const el = chatRef.current;
@@ -273,12 +292,53 @@ export default function Chat() {
       {/* Sidebar */}
       <div className="w-1/4 bg-neutral-900 border-r border-neutral-800 hidden md:flex flex-col shadow-lg">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-neutral-800 bg-gradient-to-r from-purple-800 to-neutral-900">
+        <div className="flex items-center justify-between p-4 border-b border-neutral-800 bg-gradient-to-r from-purple-800 to-neutral-900 relative">
           <h2 className="text-2xl font-bold tracking-wide text-purple-300">ChatHive</h2>
-          <MoreVertical className="text-neutral-400" />
+          <div className="relative">
+            <button
+              className="p-2 rounded-full hover:bg-neutral-800 transition"
+              onClick={() => setShowMenu((prev) => !prev)}
+            >
+              <MoreVertical className="text-neutral-400" />
+            </button>
+            {showMenu && (
+              <div className="absolute right-0 mt-2 w-[250px] bg-neutral-900 border border-neutral-800 rounded-lg shadow-lg z-10">
+                <div className="px-4 py-2 border-b border-neutral-800">
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={user?.avatarUrl || `https://ui-avatars.com/api/?name=${user?.name}`}
+                      alt={user?.name}
+                      className="w-8 h-8 rounded-full object-cover border-2 border-purple-700"
+                    />
+                    <div>
+                      <p className="font-medium text-sm">{user?.name}</p>
+                      <p className="text-xs text-neutral-400">{user?.email}</p>
+                    </div>
+                  </div>
+                </div>
+                <label
+                  className="w-full text-left px-4 py-2 hover:bg-neutral-800 transition text-sm cursor-pointer block"
+                >
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handelProfilePhotoChange}
+                  />
+                  Upload New Profile Photo
+                </label>
+                <button
+                  className="w-full text-left px-4 py-2 hover:bg-neutral-800 transition text-sm text-red-400"
+                  onClick={() => {
+                    handelLogout();
+                  }}
+                >
+                  Log Out
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-
-        {/* Search */}
         <div className="p-3">
           <div className="flex items-center bg-neutral-800 rounded-lg px-3 py-2 shadow-inner">
             <Search className="w-4 h-4 text-neutral-400 mr-2" />
@@ -321,7 +381,9 @@ export default function Chat() {
             // fallback: show static user list
             recentMassgesContacts?.map((massage) => {
               if (!massage?.from || !massage?.to) return null;
-              const otherUser = massage.from._id === user._id ? massage.to : massage.from;
+              console.log("👉", massage?.from?._id, (user?._id || user?.id))
+
+              const otherUser = massage?.from?._id === (user?._id || user?.id) ? massage?.to : massage?.from;
               return (
                 <div
                   key={massage.id || massage._id}
@@ -398,7 +460,7 @@ export default function Chat() {
                               title="Sending..."
                             >
                               🕓
-                              </span>
+                            </span>
                           )
                         }
                         {/* Message status indicators */}

@@ -13,7 +13,7 @@ export const signup = async (name, email, password) => {
 export const login = async (email, password) => {
   try {
     const res = await api.post("/auth/login", { email, password });
-    localStorage.setItem("token", res.data.token);
+    // localStorage.setItem("token", res.data.token);
     return res.data;
 
   } catch (error) {
@@ -24,17 +24,28 @@ export const login = async (email, password) => {
 
 };
 
+export const logout = async () => {
+  try {
+    const res = await api.get("/auth/logout");
+    // localStorage.removeItem("token");
+    return res.data;
+  } catch (error) {
+    console.error("Logout error:", error);
+    throw error;
+  }
+}
+
 export const fetchUser = async () => {
   // console.log("Fetching user with token:");
-  
+
   try {
 
     const res = await api.get("/auth");
     return res.data;
-    
+
   } catch (error) {
     console.error("Fetch user error:", error);
-    
+
   }
 }
 
@@ -42,10 +53,10 @@ export const searchUsers = async (query) => {
   try {
     const res = await api.get(`/auth/search/?q=${query}`);
     return res.data;
-    
+
   } catch (error) {
     console.error("Search users error:", error);
     throw error;
-    
+
   }
 }

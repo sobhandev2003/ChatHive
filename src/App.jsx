@@ -20,7 +20,13 @@ export default function App() {
     if (user) {
       setIsLoggedIn(true);
       navigate("/");
-   
+      // window.location.reload();
+
+    }
+    else {
+      setIsLoggedIn(false);
+      navigate("/login");
+      // window.location.reload();
     }
 
 
@@ -33,7 +39,7 @@ export default function App() {
       try {
         const res = await fetchUser();
         // console.log(res);
-        dispatch(setCredentials(res))
+        dispatch(setCredentials(res.user))
 
       } catch (error) {
 

@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://chathive-backend-gqs9.onrender.com",
+  // baseURL: "https://chathive-backend-gqs9.onrender.com",
+  baseURL: "http://localhost:3000",
   withCredentials: true,
 });
 

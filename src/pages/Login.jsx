@@ -18,7 +18,7 @@ export default function Login() {
     try {
       const data = await login(email, password);
       // console.log(data);
-      dispatch(setCredentials(data));
+      dispatch(setCredentials(data.user));
       
       
     } catch (error) {
