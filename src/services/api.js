@@ -6,15 +6,15 @@ const api = axios.create({
 });
 
 // Update Authorization header before each request
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  } else {
-    delete config.headers.Authorization;
-  }
-  return config;
-});
+// api.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("token");
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   } else {
+//     delete config.headers.Authorization;
+//   }
+//   return config;
+// });
 
 // api.interceptors.request.use((config) => {
 //   const token = localStorage.getItem("token");
