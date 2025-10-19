@@ -552,7 +552,11 @@ export default function Chat() {
           </div>
         </div>
       ) : (
-        !showSidebar && (
+        isMobileView ? (
+          !showSidebar && (<>
+              
+          </>)
+        ) : (
           <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-br from-neutral-900 via-black to-purple-900">
             <div className="text-center space-y-6">
               <div className="flex flex-col items-center">
