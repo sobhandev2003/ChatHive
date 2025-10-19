@@ -63,7 +63,7 @@ It supports **user authentication**, **live messaging**, **read receipts**, and 
 ```
 ├── ChatHive 
 ├── │
-├── ├── CLIENT
+├── ├── [CLIENT/](https://github.com/sobhandev2003/ChatHive)  
 ├── │   │
 ├── │   ├── node_modules
 ├── │   ├── public
@@ -98,7 +98,7 @@ It supports **user authentication**, **live messaging**, **read receipts**, and 
 ├── │   ├── README.md
 ├── │   └── vite.config.js
 ├── │
-├── ├── SERVER/ (https://github.com/sobhandev2003/ChatHive-backend)
+├── ├── [SERVER/](https://github.com/sobhandev2003/ChatHive-backend)  
 ├── │   │
 ├── │   ├── node_modules/
 ├── │   │
@@ -125,6 +125,11 @@ It supports **user authentication**, **live messaging**, **read receipts**, and 
 ├── │
 └── └── README.md
 ```
+
+🔗 **Client Folder:** [ChatHive](https://github.com/sobhandev2003/ChatHive)
+
+🔗 **SERVER Folder:** [ChatHive-backend](https://github.com/sobhandev2003/ChatHive-backend)
+
 ---
 
 ## ⚙️ Backend Details
