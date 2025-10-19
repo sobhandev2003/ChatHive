@@ -60,3 +60,21 @@ export const searchUsers = async (query) => {
 
   }
 }
+
+export const updateProfilePhoto = async (file) => {
+  if (!file) return;
+  try {
+    const formData = new FormData();
+    formData.append("avatar", file);
+    const res = await api.post("/upload", formData);
+    console.log("Update Phot ",res);
+    
+    return res.data;
+
+
+  } catch (error) {
+    console.error("Update profile photo error:", error);
+    throw error;
+
+  }
+}
