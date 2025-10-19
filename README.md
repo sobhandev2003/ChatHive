@@ -98,7 +98,7 @@ It supports **user authentication**, **live messaging**, **read receipts**, and 
 ├── │   ├── README.md
 ├── │   └── vite.config.js
 ├── │
-├── ├── SERVER/
+├── ├── SERVER/ (https://github.com/sobhandev2003/ChatHive-backend)
 ├── │   │
 ├── │   ├── node_modules/
 ├── │   │
